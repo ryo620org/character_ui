@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class CharacterDetailScreen extends StatefulWidget {
   final Character character;
+
   const CharacterDetailScreen({Key key, this.character}) : super(key: key);
+
   @override
   _CharacterDetailScreenState createState() => _CharacterDetailScreenState();
 }
@@ -46,10 +48,13 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
                 ),
                 Align(
                   alignment: Alignment.topRight,
-                  child: Hero(
-                    tag: "image-${widget.character.name}",
-                    child: Image.asset(widget.character.imagePath,
-                        height: screenHeight * 0.45),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Hero(
+                      tag: "image-${widget.character.name}",
+                      child: Image.asset(widget.character.imagePath,
+                          height: screenHeight * 0.45),
+                    ),
                   ),
                 ),
                 Padding(
@@ -74,6 +79,34 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
               ],
             ),
           ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    height: 80,
+                    child: Text(
+                      "Clips",
+                      style: AppTheme.subHeading.copyWith(color: Colors.black),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

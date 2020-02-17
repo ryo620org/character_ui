@@ -1,3 +1,4 @@
+import 'package:character_ui/models/character.dart';
 import 'package:character_ui/widgets/character_widget.dart';
 import 'package:character_ui/styleguide.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,20 @@ class CharacterListingScreen extends StatefulWidget {
 }
 
 class _CharacterListingScreenState extends State<CharacterListingScreen> {
+  PageController _pageController;
+  int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // PageController: スワイプを検出してアニメーションを提供するクラス
+    _pageController = PageController(
+      viewportFraction: 1.0,
+      initialPage: currentPage,
+      keepPage: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Scaffold: ページの核となるウィジェット
@@ -58,7 +73,7 @@ class _CharacterListingScreenState extends State<CharacterListingScreen> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: 'The Legend of Zelda',
+                        text: 'NieR:Automata',
                         style: AppTheme.display1,
                       ),
                       TextSpan(text: '\n'),
@@ -73,7 +88,18 @@ class _CharacterListingScreenState extends State<CharacterListingScreen> {
               // Expanded: 拡大して配置する（ColumnやRowと併用する
               // flexプロパティを使うと拡大率を固定できる
               Expanded(
-                child: CharacterWidget(),
+                // PageView: ページを複数持つウィジェット
+                // controllerに PageController を渡すとページを表示できる
+                child: PageView(
+                  controller: _pageController,
+                  children: <Widget>[
+                    for (var i = 0; i < characters.length; i++)
+                      CharacterWidget(
+                          character: characters[i],
+                          pageController: _pageController,
+                          currentPage: i)
+                  ],
+                ),
               ),
             ],
           ),
